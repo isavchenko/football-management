@@ -1,5 +1,5 @@
 {
-  "name": "Getting Started with Scala on Heroku",
+  "name": "Simple football management system",
   "description": "A barebones Scala app (using the Play framework), which can easily be deployed to Heroku.",
   "image": "heroku/scala",
   "addons": [ "heroku-postgresql" ]

@@ -4,4 +4,3 @@
 
 # Home page
 GET     /                           controllers.Application.index
-
