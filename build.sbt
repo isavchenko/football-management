@@ -11,7 +11,9 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-  ws
+  ws,
+  "org.apache.commons" % "commons-email" % "1.4"
+  /*"com.typesafe.play" %% "play-mailer" % "3.0.1"*/
 )
 
 libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _ )
