@@ -5,6 +5,7 @@ import org.apache.commons.mail.{DefaultAuthenticator, SimpleEmail}
  */
 object SchedulerRunner {
   def main(a: Array[String]) : Unit = {
+    println("Connecting...")
     val email = new SimpleEmail()
     email.setHostName("smtp.gmail.com")
     email.setSmtpPort(465)
