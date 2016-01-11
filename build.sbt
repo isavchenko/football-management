@@ -14,7 +14,8 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-email" % "1.4",
   "com.typesafe.play" %% "play-slick" % "1.1.1",
   "com.typesafe.play" %% "play-slick-evolutions" % "1.1.1",
-  "com.typesafe.slick" %% "slick-codegen" % "3.1.0"
+  "com.typesafe.slick" %% "slick-codegen" % "3.1.0",
+  "com.github.spullara.mustache.java" % "compiler" % "0.9.1"
 )
 
 libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _ )
