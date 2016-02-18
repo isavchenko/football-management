@@ -18,9 +18,7 @@ trait Tables {
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
 
-  /** Entity class storing rows of table Team
-   *  @param name Database column name SqlType(text), Default(None) */
-  case class TeamRow(name: Option[String] = None)
+
   /** GetResult implicit for fetching TeamRow objects using plain SQL queries */
   implicit def GetResultTeamRow(implicit e0: GR[Option[String]]): GR[TeamRow] = GR{
     prs => import prs._
@@ -36,10 +34,7 @@ trait Tables {
   /** Collection-like TableQuery object for table Team */
   lazy val Team = new TableQuery(tag => new Team(tag))
 
-  /** Entity class storing rows of table Users
-   *  @param name Database column name SqlType(varchar)
-   *  @param email Database column email SqlType(varchar) */
-  case class UsersRow(name: String, email: String)
+
   /** GetResult implicit for fetching UsersRow objects using plain SQL queries */
   implicit def GetResultUsersRow(implicit e0: GR[String]): GR[UsersRow] = GR{
     prs => import prs._
@@ -59,3 +54,11 @@ trait Tables {
   /** Collection-like TableQuery object for table Users */
   lazy val Users = new TableQuery(tag => new Users(tag))
 }
+/** Entity class storing rows of table Team
+   *  @param name Database column name SqlType(text), Default(None) */
+  case class TeamRow(name: Option[String] = None)
+
+  /** Entity class storing rows of table Users
+   *  @param name Database column name SqlType(varchar)
+   *  @param email Database column email SqlType(varchar) */
+  case class UsersRow(name: String, email: String)
