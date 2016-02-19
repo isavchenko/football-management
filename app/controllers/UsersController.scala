@@ -14,6 +14,7 @@ import play.api.libs.json.util._
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 
 /**
@@ -21,11 +22,12 @@ import scala.concurrent.{Await, Future}
  */
 object UsersController extends Controller {
   implicit val userWrites = Json.writes[UsersRow]
-  def list = Action {
+  def list = Action.async {
     val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
-    val result: Future[Seq[UsersRow]] = dbConfig.db.run(Users.to[Seq].result) //.map(userRow => (userRow.name, userRow.email)).result)
-
-    Ok(Json.toJson(Await.result(result, Duration.Inf)))
+    val usersFuture: Future[Seq[UsersRow]] = dbConfig.db.run(Users.to[Seq].result)
+    usersFuture.map {users =>
+      Ok(Json.toJson(users))
+    }
   }
 
   // for testing purposes
