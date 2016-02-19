@@ -21,9 +21,11 @@ import scala.concurrent.ExecutionContext.Implicits.global
  * Created by dev on 9/01/16.
  */
 object UsersController extends Controller {
+  // todo: find a better place for writes
   implicit val userWrites = Json.writes[UsersRow]
+  val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
+
   def list = Action.async {
-    val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
     val usersFuture: Future[Seq[UsersRow]] = dbConfig.db.run(Users.to[Seq].result)
     usersFuture.map {users =>
       Ok(Json.toJson(users))
@@ -32,7 +34,6 @@ object UsersController extends Controller {
 
   // for testing purposes
   def add = Action {
-    val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
     val tables = Await.result(dbConfig.db.run(MTable.getTables("users")), 1.seconds).toList
     if (tables.isEmpty) {
       Await.result(dbConfig.db.run(DBIO.seq(
