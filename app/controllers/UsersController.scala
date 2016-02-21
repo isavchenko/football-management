@@ -33,14 +33,13 @@ object UsersController extends Controller {
   }
 
   // for testing purposes
-  def add = Action {
-    val tables = Await.result(dbConfig.db.run(MTable.getTables("users")), 1.seconds).toList
-    if (tables.isEmpty) {
-      Await.result(dbConfig.db.run(DBIO.seq(
-        Users.schema.create,
-        Users += UsersRow("Test", "notifications.scheduler@gmail.com"))), Duration.Inf)
+  def add = Action.async {
+    val addUserFuture: Future[Unit] = dbConfig.db.run(DBIO.seq(
+      Users += UsersRow("Test", "notifications.scheduler@gmail.com")))
+
+    addUserFuture.map {_ =>
+      Ok("All good!")
     }
-    Ok("All good!")
   }
 
   def update = ???
